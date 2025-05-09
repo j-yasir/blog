@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content }}</p>
+    <p class="text-muted">By {{ post.username }} on {{ post.created_at }}</p>
+
+    <hr>
+    <h4>Comments</h4>
+    {% for comment in comments %}
+        <div class="border p-2 my-2">
+            <p>{{ comment.content }}</p>
+            <small class="text-muted">By {{ comment.username }} on {{ comment.created_at }}</small>
+        </div>
+    {% else %}
+        <p>No comments yet.</p>
+    {% endfor %}
+
+    {% if current_user.is_authenticated %}
+    <form method="post" class="mt-4">
+        <div class="mb-3">
+            <label>Add a Comment</label>
+            <textarea name="comment" class="form-control" required></textarea>
+        </div>
+        <button class="btn btn-primary">Submit</button>
+    </form>
+    {% else %}
+        <p><a href="/login">Log in</a> to comment.</p>
+    {% endif %}
+{% endblock %}
