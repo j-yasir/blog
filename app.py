@@ -4,8 +4,8 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, login_user, logout_user, login_required, UserMixin, current_user
 import os
 
-app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+app = Flask(__name__, static_folder='static')
+app.secret_key = os.getenv('SECRET_KEY', 'your_secret_key')
 bcrypt = Bcrypt(app)
 
 # MySQL config
