@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session , 
 import mysql.connector
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, login_user, logout_user, login_required, UserMixin, current_user
+import os
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -9,11 +10,11 @@ bcrypt = Bcrypt(app)
 
 # MySQL config
 db = mysql.connector.connect(
-    host="myblog-sql.mysql.database.azure.com",
-    user="myadmin",
-    password="Yasu@100%",
-    database="blog_database",
-    ssl_ca="DigiCertGlobalRootG2.crt.pem"
+    host=os.getenv('DB_HOST', 'myblog-sql.mysql.database.azure.com'),
+    user=os.getenv('DB_USER', 'myadmin'),
+    password=os.getenv('DB_PASSWORD', 'Yasu@100%'),
+    database=os.getenv('DB_NAME', 'blog_database'),
+    ssl_ca=os.getenv('DB_SSL_CA', 'DigiCertGlobalRootG2.crt.pem')
 )
 
 login_manager = LoginManager()
